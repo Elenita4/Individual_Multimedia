@@ -1,133 +1,296 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | My project (3)</title>
-    <link rel="shortcut icon" href="TemplateData/favicon.ico">
-    <link rel="stylesheet" href="TemplateData/style.css">
-  </head>
-  <body>
-    <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
-      <div id="unity-loading-bar">
-        <div id="unity-logo"></div>
-        <div id="unity-progress-bar-empty">
-          <div id="unity-progress-bar-full"></div>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyectos Multimedia - Procesamiento de Imágenes</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .contenedor-principal {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .grid-proyectos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .tarjeta-proyecto {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tarjeta-proyecto:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+        }
+
+        .tarjeta-header {
+            padding: 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .tarjeta-proyecto:nth-child(2) .tarjeta-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .tarjeta-proyecto:nth-child(3) .tarjeta-header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .tarjeta-header h2 {
+            font-size: 1.8em;
+            margin-bottom: 8px;
+        }
+
+        .tarjeta-header p {
+            opacity: 0.9;
+            font-size: 0.95em;
+        }
+
+        .tarjeta-contenido {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .descripcion {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .botones-grupo {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .btn-ejecutar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .tarjeta-proyecto:nth-child(2) .btn-ejecutar {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .tarjeta-proyecto:nth-child(3) .btn-ejecutar {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .btn-readme {
+            background: #FF9800;
+        }
+
+        .btn-video {
+            background: #FF5722;
+        }
+
+        .btn:hover {
+            transform: scale(1.02);
+            opacity: 0.95;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .badge {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin-top: 10px;
+        }
+
+        .nota-importante {
+            background: #fff3cd;
+            border-left: 4px solid #FF9800;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            color: #856404;
+        }
+
+        .nota-importante strong {
+            color: #FF6600;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .grid-proyectos {
+                grid-template-columns: 1fr;
+            }
+
+            .botones-grupo {
+                flex-direction: column;
+            }
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 50px;
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        footer a {
+            color: #00f2fe;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contenedor-principal">
+        <div class="header">
+            <h1>🖼️ Proyectos Multimedia</h1>
+            <p>Procesamiento y Clasificación de Imágenes con C# Windows Forms</p>
         </div>
-      </div>
-      <div id="unity-warning"> </div>
-      <div id="unity-footer">
-        <div id="unity-logo-title-footer"></div>
-        <div id="unity-fullscreen-button"></div>
-        <div id="unity-build-title">My project (3)</div>
-      </div>
+
+        <div class="nota-importante">
+            <strong>⚠️ Nota importante:</strong> Los archivos .exe requieren descarga. 
+            Lee los README para instrucciones de instalación y ejecución en tu máquina.
+        </div>
+
+        <div class="grid-proyectos">
+            <!-- PROYECTO 1: DETECTOR DE BORDES -->
+            <div class="tarjeta-proyecto">
+                <div class="tarjeta-header">
+                    <h2>🔍 Detector de Bordes</h2>
+                    <p>Algoritmo Sobel en C#</p>
+                </div>
+                <div class="tarjeta-contenido">
+                    <div class="descripcion">
+                        Aplicación que detecta automáticamente los bordes de imágenes usando el operador de Sobel. 
+                        Convierte imágenes a escala de grises y aplica filtros de convolución para resaltar transiciones.
+                    </div>
+                    <span class="badge">✅ Windows Forms .NET</span>
+                    <div class="botones-grupo">
+                        <a href="DetectorBordes/bin/Debug/DetectorBordes.exe" class="btn btn-ejecutar" onclick="alert('📥 Descarga el README para obtener el archivo .exe ejecutable'); return false;">
+                            ⬇️ Descargar EXE
+                        </a>
+                        <a href="readme-detector-bordes.html" class="btn btn-readme">
+                            📖 Ver Documentación
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROYECTO 2: CLASIFICADOR DE TEXTURAS -->
+            <div class="tarjeta-proyecto">
+                <div class="tarjeta-header">
+                    <h2>🎨 Clasificador de Texturas</h2>
+                    <p>Análisis con SQL Server</p>
+                </div>
+                <div class="tarjeta-contenido">
+                    <div class="descripcion">
+                        Sistema de clasificación de texturas en imágenes fotogramétricas. 
+                        Identifica: pasto, tierra, cemento y asfalto. Guarda resultados en base de datos SQL Server.
+                    </div>
+                    <span class="badge">✅ .NET 8.0 + SQL Server</span>
+                    <div class="botones-grupo">
+                        <a href="ClasificadorTexturas/bin/Debug/ClasificadorTexturas.exe" class="btn btn-ejecutar" onclick="alert('📥 Descarga el README para obtener el archivo .exe ejecutable'); return false;">
+                            ⬇️ Descargar EXE
+                        </a>
+                        <a href="readme-clasificador-texturas.html" class="btn btn-readme">
+                            📖 Ver Documentación
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROYECTO 3: VACA LOCA (INUTY) -->
+            <div class="tarjeta-proyecto">
+                <div class="tarjeta-header">
+                    <h2>🐄 Vaca Loca (Inuty)</h2>
+                    <p>Proyecto Interactivo</p>
+                </div>
+                <div class="tarjeta-contenido">
+                    <div class="descripcion">
+                        Proyecto multimedia interactivo con visualización 3D y contenido dinámico. 
+                        Incluye presentación visual y video demostrativo del proyecto.
+                    </div>
+                    <span class="badge">✅ HTML5 + Video</span>
+                    <div class="botones-grupo">
+                        <a href="Build/index.html" class="btn btn-video" target="_blank">
+                            🎬 Abrir Proyecto
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2024 Proyectos de Procesamiento de Imágenes | Desarrollado con C# y .NET</p>
+            <p><a href="https://github.com" target="_blank">Ver en GitHub</a></p>
+        </footer>
     </div>
-    <script>
-      var canvas = document.querySelector("#unity-canvas");
 
-      // Shows a temporary message banner/ribbon for a few seconds, or
-      // a permanent error message on top of the canvas if type=='error'.
-      // If type=='warning', a yellow highlight color is used.
-      // Modify or remove this function to customize the visually presented
-      // way that non-critical warnings and error messages are presented to the
-      // user.
-      function unityShowBanner(msg, type) {
-        var warningBanner = document.querySelector("#unity-warning");
-        function updateBannerVisibility() {
-          warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
-        }
-        var div = document.createElement('div');
-        div.innerHTML = msg;
-        warningBanner.appendChild(div);
-        if (type == 'error') div.style = 'background: red; padding: 10px;';
-        else {
-          if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
-          setTimeout(function() {
-            warningBanner.removeChild(div);
-            updateBannerVisibility();
-          }, 5000);
-        }
-        updateBannerVisibility();
-      }
-
-      var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/c)Baile.loader.js";
-      var config = {
-        arguments: [],
-        dataUrl: buildUrl + "/c)Baile.data.br",
-        frameworkUrl: buildUrl + "/c)Baile.framework.js.br",
-        codeUrl: buildUrl + "/c)Baile.wasm.br",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "My project (3)",
-        productVersion: "0.1.0",
-        showBanner: unityShowBanner,
-        // errorHandler: function(err, url, line) {
-        //    alert("error " + err + " occurred at line " + line);
-        //    // Return 'true' if you handled this error and don't want Unity
-        //    // to process it further, 'false' otherwise.
-        //    return true;
-        // },
-      };
-
-      // By default, Unity keeps WebGL canvas render target size matched with
-      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
-      // Set this to false if you want to decouple this synchronization from
-      // happening inside the engine, and you would instead like to size up
-      // the canvas DOM size and WebGL render target sizes yourself.
-      // config.matchWebGLToCanvasSize = false;
-
-      // If you would like all file writes inside Unity Application.persistentDataPath
-      // directory to automatically persist so that the contents are remembered when
-      // the user revisits the site the next time, uncomment the following line:
-      // config.autoSyncPersistentDataPath = true;
-      // This autosyncing is currently not the default behavior to avoid regressing
-      // existing user projects that might rely on the earlier manual
-      // JS_FileSystem_Sync() behavior, but in future Unity version, this will be
-      // expected to change.
-
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
-
-        var meta = document.createElement('meta');
-        meta.name = 'viewport';
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-        document.getElementsByTagName('head')[0].appendChild(meta);
-        document.querySelector("#unity-container").className = "unity-mobile";
-        canvas.className = "unity-mobile";
-
-        // To lower canvas resolution on mobile devices to gain some
-        // performance, uncomment the following line:
-        // config.devicePixelRatio = 1;
-
-
-      } else {
-        // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
-        canvas.style.width = "960px";
-        canvas.style.height = "600px";
-      }
-
-      document.querySelector("#unity-loading-bar").style.display = "block";
-
-      var script = document.createElement("script");
-      script.src = loaderUrl;
-      script.onload = () => {
-        createUnityInstance(canvas, config, (progress) => {
-          document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
-              }).then((unityInstance) => {
-                document.querySelector("#unity-loading-bar").style.display = "none";
-                document.querySelector("#unity-fullscreen-button").onclick = () => {
-                  unityInstance.SetFullscreen(1);
-                };
-
-              }).catch((message) => {
-                alert(message);
-              });
-            };
-
-      document.body.appendChild(script);
-
-    </script>
-  </body>
+</body>
 </html>

@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clasificador de Texturas - Documentación Completa</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .contenedor {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .contenido {
+            padding: 40px;
+        }
+
+        h2 {
+            color: #f5576c;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #f5576c;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #f093fb;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .caracteristicas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .feature {
+            background: #f0f0f0;
+            padding: 15px;
+            border-left: 4px solid #f5576c;
+            border-radius: 5px;
+        }
+
+        .feature strong {
+            color: #f5576c;
+        }
+
+        .paso {
+            background: #f9f9f9;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #FF9800;
+            border-radius: 5px;
+        }
+
+        .paso h4 {
+            color: #FF9800;
+            margin-bottom: 10px;
+        }
+
+        code {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .codigo-bloque {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            line-height: 1.4;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .alerta {
+            background: #fff3cd;
+            border-left: 4px solid #FF9800;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            color: #856404;
+        }
+
+        .exito {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            color: #155724;
+        }
+
+        .tabla {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .tabla th {
+            background: #f5576c;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .tabla td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tabla tr:hover {
+            background: #f5f5f5;
+        }
+
+        .volver {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 25px;
+            background: #f5576c;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .volver:hover {
+            background: #f093fb;
+        }
+
+        footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #ddd;
+            color: #666;
+        }
+
+        .requisitos {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .texturas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .textura {
+            padding: 15px;
+            border-radius: 8px;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .pasto {
+            background: #4b871e;
+        }
+
+        .tierra {
+            background: #8b6f47;
+        }
+
+        .cemento {
+            background: #a9a9a9;
+        }
+
+        .asfalto {
+            background: #2c2c2c;
+        }
+
+        ul {
+            margin-left: 20px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .contenido {
+                padding: 20px;
+            }
+
+            .caracteristicas {
+                grid-template-columns: 1fr;
+            }
+
+            .codigo-bloque {
+                font-size: 0.7em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contenedor">
+        <header>
+            <h1>🎨 Clasificador de Texturas</h1>
+            <p>Sistema inteligente de clasificación de texturas fotogramétricas con C# y SQL Server</p>
+        </header>
+
+        <div class="contenido">
+
+            <h2>✨ Características Principales</h2>
+            <div class="caracteristicas">
+                <div class="feature"><strong>✅</strong> Clasificación automática de texturas</div>
+                <div class="feature"><strong>✅</strong> Análisis de 4 tipos de superficies</div>
+                <div class="feature"><strong>✅</strong> Sobreposición visual de resultados</div>
+                <div class="feature"><strong>✅</strong> Base de datos SQL Server</div>
+                <div class="feature"><strong>✅</strong> Cálculo de confianza automático</div>
+                <div class="feature"><strong>✅</strong> Historial de clasificaciones</div>
+            </div>
+
+            <h2>🎯 Texturas Soportadas</h2>
+            <div class="texturas">
+                <div class="textura pasto">🌱 PASTO</div>
+                <div class="textura tierra">🌍 TIERRA</div>
+                <div class="textura cemento">🏗️ CEMENTO</div>
+                <div class="textura asfalto">🛣️ ASFALTO</div>
+            </div>
+
+            <div class="requisitos">
+                <h3>🛠️ Requisitos del Sistema</h3>
+                <ul>
+                    <li><strong>Visual Studio</strong> 2022 o superior</li>
+                    <li><strong>.NET</strong> 8.0 (LTS)</li>
+                    <li><strong>SQL Server</strong> LocalDB o Express</li>
+                    <li><strong>Windows</strong> 7/8/10/11</li>
+                    <li><strong>RAM mínima:</strong> 4 GB</li>
+                </ul>
+            </div>
+
+            <h2>🚀 Guía de Instalación</h2>
+
+            <div class="paso">
+                <h4>Paso 1: Crear el Proyecto en Visual Studio</h4>
+                <p><strong>Opción A: GUI (Recomendado)</strong></p>
+                <ul>
+                    <li>Abre Visual Studio 2022</li>
+                    <li>Archivo → Nuevo → Proyecto</li>
+                    <li>Busca: "Windows Forms App"</li>
+                    <li>Selecciona: Aplicación de Windows Forms (.NET)</li>
+                    <li>Nombre: <code>ClasificadorTexturas</code></li>
+                    <li>Ubicación: <code>C:\MisProyectos\</code></li>
+                    <li>Framework: <code>.NET 8.0 (LTS)</code></li>
+                </ul>
+
+                <p style="margin-top: 15px;"><strong>Opción B: Línea de Comandos</strong></p>
+                <div class="codigo-bloque">
+# Crear carpeta del proyecto
+mkdir ClasificadorTexturas
+cd ClasificadorTexturas
+
+# Crear proyecto Windows Forms
+dotnet new winforms -n ClasificadorTexturas
+
+# Crear solución
+dotnet new sln -n ClasificadorTexturas
+dotnet sln add ClasificadorTexturas/ClasificadorTexturas.csproj
+                </div>
+            </div>
+
+            <div class="paso">
+                <h4>Paso 2: Agregar Dependencias NuGet</h4>
+                <p><strong>Desde Visual Studio:</strong></p>
+                <ul>
+                    <li>Proyecto → Administrar Paquetes NuGet</li>
+                    <li>Busca e instala:
+                        <ul>
+                            <li><code>Microsoft.Data.SqlClient</code></li>
+                            <li><code>System.Drawing.Common</code></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <p style="margin-top: 15px;"><strong>Desde Línea de Comandos:</strong></p>
+                <div class="codigo-bloque">
+cd ClasificadorTexturas
+dotnet add package Microsoft.Data.SqlClient
+dotnet add package System.Drawing.Common
+                </div>
+            </div>
+
+            <div class="paso">
+                <h4>Paso 3: Eliminar Archivos por Defecto</h4>
+                <p>Visual Studio crea archivos que no necesitamos:</p>
+                <div class="codigo-bloque">
+ELIMINAR ESTOS ARCHIVOS:
+- Form1.cs
+- Form1.Designer.cs
+- Form1.resx
+                </div>
+            </div>
+
+            <div class="paso">
+                <h4>Paso 4: Crear Program.cs</h4>
+                <div class="codigo-bloque">
+using System;
+using System.Windows.Forms;
+
+namespace ClasificadorTexturas
+{
+    internal static class Program
+    {
+        [STAThread]
+        static void Main()
+        {
+            ApplicationConfiguration.Initialize();
+            Application.Run(new Form1());
+        }
+    }
+}
+                </div>
+            </div>
+
+            <div class="paso">
+                <h4>Paso 5: Crear Form1.cs</h4>
+                <p>En el Explorador de Soluciones, haz clic derecho sobre el proyecto:</p>
+                <ul>
+                    <li>Agregar → Clase</li>
+                    <li>Nombre: <code>Form1.cs</code></li>
+                    <li>Reemplaza TODO el contenido con el código completo (ver más abajo)</li>
+                </ul>
+            </div>
+
+            <h2>📝 Código Completo de Form1.cs</h2>
+            <p style="color: #f5576c; font-weight: bold;">⚠️ Este es el código principal. Cópialo completo en Form1.cs</p>
+            
+            <div class="codigo-bloque" style="max-height: 600px;">
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+using Microsoft.Data.SqlClient;
+
+namespace ClasificadorTexturas
+{
+    public class Form1 : Form
+    {
+        // DECLARACIÓN DE CONTROLES
+        private PictureBox pictureBox1;
+        private PictureBox pictureBox2;
+        private Button btnCargar;
+        private Button btnClasificar;
+        private Button btnGuardar;
+        private Label lblResultados;
+        private Label lblTitulo;
+
+        private Bitmap imagenOriginal;
+        private Bitmap imagenSobrepuesta;
+        private Dictionary&lt;string, double&gt; ultimosPorcentajes;
+        private string ultimaRutaImagen;
+        private string ultimaTexturapredominante;
+        private double ultimaConfianza;
+
+        // CONFIGURACIÓN DE TEXTURAS
+        private readonly (string Nombre, Color ColorReferencia, Color ColorSobrepuesto)[] texturas = new[]
+        {
+            ("PASTO",    Color.FromArgb(75, 135, 55),     Color.FromArgb(0, 255, 0)),
+            ("TIERRA",   Color.FromArgb(155, 125, 85),    Color.FromArgb(139, 69, 19)),
+            ("CEMENTO",  Color.FromArgb(185, 185, 180),   Color.FromArgb(128, 128, 128)),
+            ("ASFALTO",  Color.FromArgb(55, 55, 58),      Color.FromArgb(0, 0, 0))
+        };
+
+        // CADENA DE CONEXIÓN A SQL SERVER
+        private readonly string connectionString = @"Server=(localdb)\MSSQLLocalDB;Database=TexturasDB;Trusted_Connection=True;";
+
+        // CONSTRUCTOR
+        public Form1()
+        {
+            InicializarFormulario();
+            InicializarControles();
+            InicializarBaseDeDatos();
+            ActualizarEstadoBotones();
+        }
+
+        // MÉTODOS DE INICIALIZACIÓN
+        private void InicializarFormulario()
+        {
+            this.Text = "CLASIFICADOR DE TEXTURAS - FOTOGRAMETRÍA";
+            this.Size = new Size(1100, 800);
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.BackColor = Color.FromArgb(240, 240, 240);
+        }
+
+        private void InicializarControles()
+        {
+            // TÍTULO
+            lblTitulo = new Label
+            {
+                Text = "📊 CLASIFICADOR DE TEXTURAS - FOTOGRAMETRÍA",
+                Font = new Font("Arial", 14, FontStyle.Bold),
+                ForeColor = Color.FromArgb(33, 33, 33),
+                AutoSize = true,
+                Location = new Point(20, 15)
+            };
+            this.Controls.Add(lblTitulo);
+
+            // PICTUREBOX 1 (IMAGEN ORIGINAL)
+            pictureBox1 = new PictureBox
+            {
+                Location = new Point(20, 50),
+                Size = new Size(400, 400),
+                BorderStyle = BorderStyle.FixedSingle,
+                SizeMode = PictureBoxSizeMode.Zoom,
+                BackColor = Color.White
+            };
+            this.Controls.Add(pictureBox1);
+
+            Label lbl1 = new Label
+            {
+                Text = "Imagen Original",
+                Font = new Font("Arial", 10, FontStyle.Bold),
+                Location = new Point(20, 460),
+                AutoSize = true
+            };
+            this.Controls.Add(lbl1);
+
+            // PICTUREBOX 2 (IMAGEN SOBREPUESTA)
+            pictureBox2 = new PictureBox
+            {
+                Location = new Point(640, 50),
+                Size = new Size(400, 400),
+                BorderStyle = BorderStyle.FixedSingle,
+                SizeMode = PictureBoxSizeMode.Zoom,
+                BackColor = Color.White
+            };
+            this.Controls.Add(pictureBox2);
+
+            Label lbl2 = new Label
+            {
+                Text = "Imagen con Sobreposición",
+                Font = new Font("Arial", 10, FontStyle.Bold),
+                Location = new Point(640, 460),
+                AutoSize = true
+            };
+            this.Controls.Add(lbl2);
+
+            // BOTONES
+            btnCargar = new Button
+            {
+                Text = "📁 Cargar Imagen",
+                Location = new Point(20, 490),
+                Size = new Size(150, 35),
+                Font = new Font("Arial", 10),
+                BackColor = Color.FromArgb(52, 152, 219),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat
+            };
+            btnCargar.Click += BtnCargar_Click;
+            this.Controls.Add(btnCargar);
+
+            btnClasificar = new Button
+            {
+                Text = "🎨 Clasificar",
+                Location = new Point(180, 490),
+                Size = new Size(150, 35),
+                Font = new Font("Arial", 10),
+                BackColor = Color.FromArgb(46, 204, 113),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Enabled = false
+            };
+            btnClasificar.Click += BtnClasificar_Click;
+            this.Controls.Add(btnClasificar);
+
+            btnGuardar = new Button
+            {
+                Text = "💾 Guardar Resultados",
+                Location = new Point(340, 490),
+                Size = new Size(150, 35),
+                Font = new Font("Arial", 10),
+                BackColor = Color.FromArgb(155, 89, 182),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Enabled = false
+            };
+            btnGuardar.Click += BtnGuardar_Click;
+            this.Controls.Add(btnGuardar);
+
+            // PANEL DE RESULTADOS
+            Panel panelResultados = new Panel
+            {
+                Location = new Point(20, 540),
+                Size = new Size(1020, 200),
+                BorderStyle = BorderStyle.FixedSingle,
+                BackColor = Color.White
+            };
+
+            Label lblEncabezado = new Label
+            {
+                Text = "📊 RESULTADOS DEL ANÁLISIS",
+                Font = new Font("Arial", 11, FontStyle.Bold),
+                Location = new Point(10, 10),
+                ForeColor = Color.FromArgb(52, 73, 94),
+                AutoSize = true
+            };
+            panelResultados.Controls.Add(lblEncabezado);
+
+            lblResultados = new Label
+            {
+                Location = new Point(10, 35),
+                Size = new Size(990, 150),
+                Font = new Font("Courier New", 9),
+                Text = "Carga una imagen y clasifícala para ver resultados",
+                ForeColor = Color.FromArgb(52, 73, 94),
+                AutoSize = false
+            };
+            panelResultados.Controls.Add(lblResultados);
+
+            this.Controls.Add(panelResultados);
+            ultimosPorcentajes = new Dictionary&lt;string, double&gt;();
+        }
+
+        private void ActualizarEstadoBotones()
+        {
+            btnClasificar.Enabled = imagenOriginal != null;
+            btnGuardar.Enabled = imagenSobrepuesta != null &amp;&amp; ultimosPorcentajes.Count &gt; 0;
+        }
+
+        private void BtnCargar_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                dialog.Filter = "Imágenes|*.jpg;*.jpeg;*.png;*.bmp|Todos los archivos|*.*";
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        imagenOriginal = new Bitmap(dialog.FileName);
+                        pictureBox1.Image = imagenOriginal;
+                        ultimaRutaImagen = dialog.FileName;
+                        imagenSobrepuesta = null;
+                        pictureBox2.Image = null;
+                        lblResultados.Text = "Imagen cargada. Haz clic en 'Clasificar' para analizar.";
+                        ActualizarEstadoBotones();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private void BtnClasificar_Click(object sender, EventArgs e)
+        {
+            if (imagenOriginal == null)
+            {
+                MessageBox.Show("Por favor carga una imagen primero.");
+                return;
+            }
+
+            try
+            {
+                var (conteos, porcentajes) = AnalizarTexturas(imagenOriginal);
+                ultimosPorcentajes = porcentajes;
+                imagenSobrepuesta = AplicarSobreposicion(imagenOriginal);
+                pictureBox2.Image = imagenSobrepuesta;
+
+                var paresOrdenados = porcentajes.OrderByDescending(x =&gt; x.Value).ToList();
+                ultimaTexturapredominante = paresOrdenados[0].Key;
+                double mayor = paresOrdenados[0].Value;
+                double segundo = paresOrdenados.Count &gt; 1 ? paresOrdenados[1].Value : 0;
+                ultimaConfianza = (mayor - segundo) / 100.0;
+
+                MostrarResultados(porcentajes, ultimaTexturapredominante, ultimaConfianza);
+                ActualizarEstadoBotones();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
+
+        private void BtnGuardar_Click(object sender, EventArgs e)
+        {
+            if (imagenSobrepuesta == null || ultimosPorcentajes.Count == 0)
+            {
+                MessageBox.Show("Primero debes clasificar una imagen.");
+                return;
+            }
+
+            try
+            {
+                byte[] imagenBytes = null;
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    imagenOriginal.Save(ms, ImageFormat.Jpeg);
+                    imagenBytes = ms.ToArray();
+                }
+
+                string nombreImagen = Path.GetFileName(ultimaRutaImagen);
+                GuardarEnBaseDeDatos(nombreImagen, ultimosPorcentajes, ultimaTexturapredominante, ultimaConfianza, imagenBytes);
+                MessageBox.Show("✅ Resultados guardados en la base de datos.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
+
+        // LÓGICA DE CLASIFICACIÓN
+        private (Dictionary&lt;string, int&gt; conteos, Dictionary&lt;string, double&gt; porcentajes) AnalizarTexturas(Bitmap img)
+        {
+            Dictionary&lt;string, int&gt; conteos = new Dictionary&lt;string, int&gt;();
+            foreach (var textura in texturas)
+            {
+                conteos[textura.Nombre] = 0;
+            }
+
+            int ancho = img.Width;
+            int alto = img.Height;
+            int pixelesAnalizados = 0;
+
+            for (int y = 1; y &lt; alto - 1; y++)
+            {
+                for (int x = 1; x &lt; ancho - 1; x++)
+                {
+                    int sumaR = 0, sumaG = 0, sumaB = 0;
+                    for (int dy = -1; dy &lt;= 1; dy++)
+                    {
+                        for (int dx = -1; dx &lt;= 1; dx++)
+                        {
+                            Color pixel = img.GetPixel(x + dx, y + dy);
+                            sumaR += pixel.R;
+                            sumaG += pixel.G;
+                            sumaB += pixel.B;
+                        }
+                    }
+
+                    Color promedio = Color.FromArgb(sumaR / 9, sumaG / 9, sumaB / 9);
+                    string texturaCercana = EncontrarTexturaCercana(promedio);
+                    conteos[texturaCercana]++;
+                    pixelesAnalizados++;
+                }
+            }
+
+            Dictionary&lt;string, double&gt; porcentajes = new Dictionary&lt;string, double&gt;();
+            foreach (var textura in texturas)
+            {
+                double porcentaje = pixelesAnalizados &gt; 0 ? (conteos[textura.Nombre] / (double)pixelesAnalizados) * 100.0 : 0;
+                porcentajes[textura.Nombre] = Math.Round(porcentaje, 1);
+            }
+
+            return (conteos, porcentajes);
+        }
+
+        private string EncontrarTexturaCercana(Color promedio)
+        {
+            string texturaCercana = texturas[0].Nombre;
+            double distanciaMinima = double.MaxValue;
+
+            foreach (var textura in texturas)
+            {
+                double distancia = CalcularDistancia(promedio, textura.ColorReferencia);
+                if (distancia &lt; distanciaMinima)
+                {
+                    distanciaMinima = distancia;
+                    texturaCercana = textura.Nombre;
+                }
+            }
+
+            return texturaCercana;
+        }
+
+        private double CalcularDistancia(Color c1, Color c2)
+        {
+            int dr = c1.R - c2.R;
+            int dg = c1.G - c2.G;
+            int db = c1.B - c2.B;
+            return Math.Sqrt(dr * dr + dg * dg + db * db);
+        }
+
+        private Bitmap AplicarSobreposicion(Bitmap original)
+        {
+            Bitmap resultado = new Bitmap(original.Width, original.Height);
+            int ancho = original.Width;
+            int alto = original.Height;
+
+            for (int y = 0; y &lt; alto; y++)
+            {
+                for (int x = 0; x &lt; ancho; x++)
+                {
+                    Color colorResultado;
+
+                    if (x == 0 || x == ancho - 1 || y == 0 || y == alto - 1)
+                    {
+                        colorResultado = Color.FromArgb(200, 200, 200);
+                    }
+                    else
+                    {
+                        int sumaR = 0, sumaG = 0, sumaB = 0;
+                        for (int dy = -1; dy &lt;= 1; dy++)
+                        {
+                            for (int dx = -1; dx &lt;= 1; dx++)
+                            {
+                                Color pixel = original.GetPixel(x + dx, y + dy);
+                                sumaR += pixel.R;
+                                sumaG += pixel.G;
+                                sumaB += pixel.B;
+                            }
+                        }
+
+                        Color promedio = Color.FromArgb(sumaR / 9, sumaG / 9, sumaB / 9);
+                        string texturaCercana = EncontrarTexturaCercana(promedio);
+                        var textura = texturas.FirstOrDefault(t =&gt; t.Nombre == texturaCercana);
+                        colorResultado = textura.ColorSobrepuesto;
+                    }
+
+                    resultado.SetPixel(x, y, colorResultado);
+                }
+            }
+
+            return resultado;
+        }
+
+        private void MostrarResultados(Dictionary&lt;string, double&gt; porcentajes, string predominante, double confianza)
+        {
+            string resultado = "🌍 ANÁLISIS COMPLETADO\n";
+            resultado += "─────────────────────────────────────────────────────────\n\n";
+
+            foreach (var textura in texturas)
+            {
+                double porcentaje = porcentajes[textura.Nombre];
+                int barras = (int)(porcentaje / 4);
+                string barraVisual = new string('█', barras) + new string('░', 25 - barras);
+                resultado += $"{textura.Nombre.PadRight(10)} {porcentaje:F1}%".PadRight(20) + $"│{barraVisual}│\n";
+            }
+
+            resultado += "\n─────────────────────────────────────────────────────────\n\n";
+            resultado += $"🏆 TEXTURA PREDOMINANTE: {predominante} ({porcentajes[predominante]:F1}%)\n";
+            resultado += $"📈 CONFIANZA: {Math.Round(confianza * 100, 1)}%";
+
+            lblResultados.Text = resultado;
+        }
+
+        // BASE DE DATOS
+        private void InicializarBaseDeDatos()
+        {
+            try
+            {
+                string masterConnection = @"Server=(localdb)\MSSQLLocalDB;Integrated Security=true;";
+
+                using (SqlConnection conn = new SqlConnection(masterConnection))
+                {
+                    conn.Open();
+                    string createDbQuery = @"
+                        IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'TexturasDB')
+                        BEGIN
+                            CREATE DATABASE TexturasDB;
+                        END
+                    ";
+                    using (SqlCommand cmd = new SqlCommand(createDbQuery, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string createTableQuery = @"
+                        IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'HistorialClasificaciones')
+                        BEGIN
+                            CREATE TABLE HistorialClasificaciones (
+                                Id INT IDENTITY(1,1) PRIMARY KEY,
+                                NombreImagen NVARCHAR(255) NOT NULL,
+                                FechaClasificacion DATETIME NOT NULL DEFAULT GETDATE(),
+                                PorcentajePasto FLOAT NOT NULL,
+                                PorcentajeTierra FLOAT NOT NULL,
+                                PorcentajeCemento FLOAT NOT NULL,
+                                PorcentajeAsfalto FLOAT NOT NULL,
+                                TexturaPredominante NVARCHAR(50) NOT NULL,
+                                ConfianzaPromedio FLOAT NOT NULL,
+                                RutaImagenOriginal NVARCHAR(500) NULL,
+                                ImagenBytes VARBINARY(MAX) NULL
+                            );
+                        END
+                    ";
+                    using (SqlCommand cmd = new SqlCommand(createTableQuery, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"⚠️ Advertencia BD: {ex.Message}");
+            }
+        }
+
+        private void GuardarEnBaseDeDatos(string nombreImagen, Dictionary&lt;string, double&gt; porcentajes,
+            string predominante, double confianza, byte[] imagenBytes)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string insertQuery = @"
+                    INSERT INTO HistorialClasificaciones 
+                    (NombreImagen, PorcentajePasto, PorcentajeTierra, PorcentajeCemento, 
+                     PorcentajeAsfalto, TexturaPredominante, ConfianzaPromedio, RutaImagenOriginal, ImagenBytes)
+                    VALUES (@nombre, @pasto, @tierra, @cemento, @asfalto, @predominante, @confianza, @ruta, @imagen)
+                ";
+                using (SqlCommand cmd = new SqlCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.AddWithValue("@nombre", nombreImagen);
+                    cmd.Parameters.AddWithValue("@pasto", porcentajes["PASTO"]);
+                    cmd.Parameters.AddWithValue("@tierra", porcentajes["TIERRA"]);
+                    cmd.Parameters.AddWithValue("@cemento", porcentajes["CEMENTO"]);
+                    cmd.Parameters.AddWithValue("@asfalto", porcentajes["ASFALTO"]);
+                    cmd.Parameters.AddWithValue("@predominante", predominante);
+                    cmd.Parameters.AddWithValue("@confianza", confianza);
+                    cmd.Parameters.AddWithValue("@ruta", ultimaRutaImagen ?? "");
+                    cmd.Parameters.AddWithValue("@imagen", imagenBytes ?? Array.Empty&lt;byte&gt;());
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+    }
+}
+            </div>
+
+            <h2>🔧 Configuración de la Base de Datos</h2>
+
+            <div class="paso">
+                <h4>Verificar SQL Server LocalDB</h4>
+                <p>Abre Command Prompt como Administrador:</p>
+                <div class="codigo-bloque">
+sqllocaldb info
+sqllocaldb start MSSQLLocalDB
+                </div>
+
+                <p style="margin-top: 15px;">Conectarse a la BD:</p>
+                <div class="codigo-bloque">
+sqlcmd -S (localdb)\MSSQLLocalDB
+
+-- Ver bases de datos
+SELECT name FROM sys.databases;
+GO
+
+-- Usar TexturasDB
+USE TexturasDB;
+GO
+
+-- Ver registros
+SELECT * FROM HistorialClasificaciones;
+GO
+                </div>
+            </div>
+
+            <h2>🐛 Solución de Problemas</h2>
+
+            <div class="alerta">
+                <strong>❌ Error: No se encuentra System.Drawing.Common</strong><br>
+                ✅ Solución: <code>dotnet add package System.Drawing.Common</code>
+            </div>
+
+            <div class="alerta">
+                <strong>❌ Error: SQL Server no disponible</strong><br>
+                ✅ Solución: Ejecuta <code>sqllocaldb start MSSQLLocalDB</code>
+            </div>
+
+            <div class="alerta">
+                <strong>❌ Error: CS0103 - No existe 'ApplicationConfiguration'</strong><br>
+                ✅ Solución: En Program.cs, reemplaza:
+                <div class="codigo-bloque" style="margin-top: 10px;">
+ApplicationConfiguration.Initialize();
+
+// por:
+
+Application.EnableVisualStyles();
+Application.SetCompatibleTextRenderingDefault(false);
+                </div>
+            </div>
+
+            <h2>📊 Estructura del Proyecto Final</h2>
+            <div class="codigo-bloque">
+ClasificadorTexturas/
+├── bin/
+│   └── Debug/
+│       └── net8.0-windows/
+│           ├── ClasificadorTexturas.dll
+│           ├── ClasificadorTexturas.exe
+│           ├── Microsoft.Data.SqlClient.dll
+│           └── System.Drawing.Common.dll
+├── obj/
+├── ClasificadorTexturas.csproj    ✅
+├── Program.cs                      ✅
+├── Form1.cs                        ✅
+├── ClasificadorTexturas.sln        ✅
+└── README.md                       ✅
+            </div>
+
+            <div class="exito">
+                <strong>✅ ¡LISTO!</strong><br>
+                Ahora tienes el proyecto completamente configurado. Compila con Ctrl+Shift+B y ejecuta con F5. 
+                La aplicación funcionará perfectamente con la base de datos integrada.
+            </div>
+
+            <a href="index.html" class="volver">← Volver al Inicio</a>
+        </div>
+
+        <footer>
+            <p>© 2024 Clasificador de Texturas - Procesamiento de Imágenes Fotogramétricas</p>
+            <p>Desarrollado en C# .NET 8.0 con SQL Server</p>
+        </footer>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detector de Bordes - Documentación Completa</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .contenedor {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .contenido {
+            padding: 40px;
+        }
+
+        h2 {
+            color: #667eea;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .caracteristicas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .feature {
+            background: #f0f0f0;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            border-radius: 5px;
+        }
+
+        .feature strong {
+            color: #667eea;
+        }
+
+        .paso {
+            background: #f9f9f9;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #FF9800;
+            border-radius: 5px;
+        }
+
+        .paso h4 {
+            color: #FF9800;
+            margin-bottom: 10px;
+        }
+
+        code {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .codigo-bloque {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            line-height: 1.4;
+        }
+
+        .alerta {
+            background: #fff3cd;
+            border-left: 4px solid #FF9800;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            color: #856404;
+        }
+
+        .exito {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            color: #155724;
+        }
+
+        .tabla {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .tabla th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .tabla td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tabla tr:hover {
+            background: #f5f5f5;
+        }
+
+        .volver {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 25px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .volver:hover {
+            background: #764ba2;
+        }
+
+        footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #ddd;
+            color: #666;
+        }
+
+        .requisitos {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        ul {
+            margin-left: 20px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .contenido {
+                padding: 20px;
+            }
+
+            .caracteristicas {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contenedor">
+        <header>
+            <h1>🔍 Detector de Bordes - Sobel</h1>
+            <p>Detección automática de bordes usando el operador de Sobel en C# Windows Forms</p>
+        </header>
+
+        <div class="contenido">
+
+            <h2>✨ Características Principales</h2>
+            <div class="caracteristicas">
+                <div class="feature"><strong>✅</strong> Detección de bordes con Sobel</div>
+                <div class="feature"><strong>✅</strong> Conversión a escala de grises</div>
+                <div class="feature"><strong>✅</strong> Interfaz dual (original vs procesada)</div>
+                <div class="feature"><strong>✅</strong> Soporta JPG, PNG, BMP, GIF</div>
+                <div class="feature"><strong>✅</strong> Guardado en múltiples formatos</div>
+                <div class="feature"><strong>✅</strong> Código 100% autocontenido</div>
+            </div>
+
+            <div class="requisitos">
+                <h3>🛠️ Requisitos del Sistema</h3>
+                <ul>
+                    <li><strong>Visual Studio</strong> 2019 o superior</li>
+                    <li><strong>.NET Framework</strong> 4.7.2 o superior</li>
+                    <li><strong>Windows</strong> 7, 8, 10 u 11</li>
+                    <li><strong>RAM mínima:</strong> 2 GB</li>
+                </ul>
+            </div>
+
+            <h2>🚀 Guía de Instalación</h2>
+
+            <div class="paso">
+                <h4>Paso 1: Crear el Proyecto</h4>
+                <p>Abre Visual Studio y crea un nuevo proyecto:</p>
+                <ul>
+                    <li>Archivo → Nuevo → Proyecto</li>
+                    <li>Selecciona: "Windows Forms App (.NET Framework)"</li>
+                    <li>Nombre: <code>DetectorBordes</code></li>
+                    <li>Framework: <code>.NET Framework 4.7.2</code></li>
+                </ul>
+            </div>
+
+            <div class="paso">
+                <h4>Paso 2: Eliminar Archivos por Defecto</h4>
+                <p>Elimina estos archivos que Visual Studio crea automáticamente:</p>
+                <div class="codigo-bloque">
+Form1.cs
+Form1.Designer.cs
+Form1.resx
+                </div>
+                <p class="alerta">⚠️ <strong>Importante:</strong> No necesitamos el diseñador visual, usaremos código puro.</p>
+            </div>
+
+            <div class="paso">
+                <h4>Paso 3: Crear los Archivos de Código</h4>
+                <p>Crea DOS archivos con el código que se muestra a continuación.</p>
+            </div>
+
+            <h2>📝 Código Fuente Completo</h2>
+
+            <h3>Archivo 1: Program.cs</h3>
+            <div class="codigo-bloque">
+using System;
+using System.Windows.Forms;
+
+namespace DetectorBordes
+{
+    internal static class Program
+    {
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new FormDetectorBordes());
+        }
+    }
+}
+            </div>
+
+            <h3>Archivo 2: FormDetectorBordes.cs (Código Completo)</h3>
+            <div class="codigo-bloque">
+using System;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Windows.Forms;
+
+namespace DetectorBordes
+{
+    public class FormDetectorBordes : Form
+    {
+        private PictureBox pbOriginal;
+        private PictureBox pbProcesada;
+        private Button btnCargar;
+        private Button btnDetectar;
+        private Button btnGuardar;
+        private Button btnResetear;
+        
+        private Bitmap imagenOriginal;
+        private Bitmap imagenProcesada;
+
+        public FormDetectorBordes()
+        {
+            CrearInterfaz();
+        }
+
+        private void CrearInterfaz()
+        {
+            this.Text = "Detector de Bordes - Sobel";
+            this.Size = new Size(1000, 600);
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.MinimumSize = new Size(800, 500);
+
+            // Panel principal con TableLayout
+            TableLayoutPanel mainPanel = new TableLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                ColumnCount = 2,
+                RowCount = 2,
+                Padding = new Padding(10)
+            };
+            
+            mainPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
+            mainPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
+            mainPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
+            mainPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
+
+            // PictureBox para imagen original
+            pbOriginal = new PictureBox
+            {
+                Dock = DockStyle.Fill,
+                SizeMode = PictureBoxSizeMode.Zoom,
+                BorderStyle = BorderStyle.FixedSingle,
+                BackColor = Color.White,
+                Margin = new Padding(5)
+            };
+
+            // PictureBox para imagen procesada
+            pbProcesada = new PictureBox
+            {
+                Dock = DockStyle.Fill,
+                SizeMode = PictureBoxSizeMode.Zoom,
+                BorderStyle = BorderStyle.FixedSingle,
+                BackColor = Color.White,
+                Margin = new Padding(5)
+            };
+
+            // Panel de botones
+            FlowLayoutPanel panelBotones = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                FlowDirection = FlowDirection.LeftToRight,
+                Padding = new Padding(5),
+                Margin = new Padding(5)
+            };
+
+            // Crear botones
+            btnCargar = new Button { Text = "📂 Cargar", Width = 130, Height = 40 };
+            btnDetectar = new Button { Text = "🔍 Detectar", Width = 130, Height = 40 };
+            btnGuardar = new Button { Text = "💾 Guardar", Width = 140, Height = 40 };
+            btnResetear = new Button { Text = "🔄 Resetear", Width = 110, Height = 40 };
+
+            // Asignar eventos
+            btnCargar.Click += (s, e) => CargarImagen();
+            btnDetectar.Click += (s, e) => DetectarBordes();
+            btnGuardar.Click += (s, e) => GuardarImagen();
+            btnResetear.Click += (s, e) => Resetear();
+
+            panelBotones.Controls.AddRange(new Control[] { btnCargar, btnDetectar, btnGuardar, btnResetear });
+
+            mainPanel.Controls.Add(pbOriginal, 0, 0);
+            mainPanel.Controls.Add(pbProcesada, 1, 0);
+            mainPanel.Controls.Add(panelBotones, 0, 1);
+            mainPanel.SetColumnSpan(panelBotones, 2);
+
+            this.Controls.Add(mainPanel);
+        }
+
+        private void CargarImagen()
+        {
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.Filter = "Imágenes|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    imagenOriginal = new Bitmap(ofd.FileName);
+                    pbOriginal.Image = new Bitmap(imagenOriginal);
+                    pbProcesada.Image = null;
+                }
+            }
+        }
+
+        private void DetectarBordes()
+        {
+            if (pbOriginal.Image == null)
+            {
+                MessageBox.Show("Carga una imagen primero", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            this.Cursor = Cursors.WaitCursor;
+            imagenProcesada = AplicarSobel(imagenOriginal);
+            pbProcesada.Image = imagenProcesada;
+            this.Cursor = Cursors.Default;
+            MessageBox.Show("✅ Bordes detectados correctamente");
+        }
+
+        private Bitmap AplicarSobel(Bitmap imagenOriginal)
+        {
+            Bitmap imagenGris = ConvertirAGrises(imagenOriginal);
+            int ancho = imagenGris.Width;
+            int alto = imagenGris.Height;
+            Bitmap resultado = new Bitmap(ancho, alto);
+
+            int[,] sobelX = { { -1, 0, 1 }, { -2, 0, 2 }, { -1, 0, 1 } };
+            int[,] sobelY = { { -1, -2, -1 }, { 0, 0, 0 }, { 1, 2, 1 } };
+
+            for (int y = 1; y < alto - 1; y++)
+            {
+                for (int x = 1; x < ancho - 1; x++)
+                {
+                    int gx = 0, gy = 0;
+
+                    for (int ky = -1; ky <= 1; ky++)
+                    {
+                        for (int kx = -1; kx <= 1; kx++)
+                        {
+                            Color pixel = imagenGris.GetPixel(x + kx, y + ky);
+                            int valor = pixel.R;
+                            gx += sobelX[ky + 1, kx + 1] * valor;
+                            gy += sobelY[ky + 1, kx + 1] * valor;
+                        }
+                    }
+
+                    int magnitud = (int)Math.Sqrt(gx * gx + gy * gy);
+                    magnitud = Math.Min(255, magnitud);
+                    Color color = Color.FromArgb(magnitud, magnitud, magnitud);
+                    resultado.SetPixel(x, y, color);
+                }
+            }
+
+            return resultado;
+        }
+
+        private Bitmap ConvertirAGrises(Bitmap original)
+        {
+            Bitmap gris = new Bitmap(original.Width, original.Height);
+
+            for (int y = 0; y < original.Height; y++)
+            {
+                for (int x = 0; x < original.Width; x++)
+                {
+                    Color pixel = original.GetPixel(x, y);
+                    int promedio = (int)(pixel.R * 0.3 + pixel.G * 0.59 + pixel.B * 0.11);
+                    Color grisColor = Color.FromArgb(promedio, promedio, promedio);
+                    gris.SetPixel(x, y, grisColor);
+                }
+            }
+
+            return gris;
+        }
+
+        private void GuardarImagen()
+        {
+            if (pbProcesada.Image == null)
+            {
+                MessageBox.Show("Procesa una imagen primero");
+                return;
+            }
+
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "PNG|*.png|JPEG|*.jpg|Bitmap|*.bmp";
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    pbProcesada.Image.Save(sfd.FileName);
+                    MessageBox.Show("✅ Imagen guardada correctamente");
+                }
+            }
+        }
+
+        private void Resetear()
+        {
+            pbOriginal.Image = null;
+            pbProcesada.Image = null;
+            imagenOriginal?.Dispose();
+            imagenProcesada?.Dispose();
+            GC.Collect();
+        }
+    }
+}
+            </div>
+
+            <h2>📖 Cómo Funciona el Algoritmo de Sobel</h2>
+
+            <h3>Paso 1: Conversión a Escala de Grises</h3>
+            <div class="codigo-bloque">
+Gris = (R × 0.3) + (G × 0.59) + (B × 0.11)
+            </div>
+            <p>Esta fórmula pondera cada canal RGB para mantener la luminosidad correcta.</p>
+
+            <h3>Paso 2: Máscaras de Sobel</h3>
+            <p>Se aplican dos matrices de convolución 3×3:</p>
+            <div class="codigo-bloque">
+Gx (Horizontal)     Gy (Vertical)
+[-1, 0, 1]          [-1, -2, -1]
+[-2, 0, 2]          [ 0,  0,  0]
+[-1, 0, 1]          [ 1,  2,  1]
+            </div>
+
+            <h3>Paso 3: Cálculo del Gradiente</h3>
+            <div class="codigo-bloque">
+Magnitud = √(Gx² + Gy²)
+            </div>
+
+            <h2>💡 Consejos para Mejores Resultados</h2>
+            <ul>
+                <li><strong>Alto contraste:</strong> Las imágenes con buen contraste producen bordes más claros</li>
+                <li><strong>Imágenes nítidas:</strong> Evita desenfoque, el algoritmo funciona mejor con bordes definidos</li>
+                <li><strong>Resolución:</strong> Procesa imágenes de hasta 4000×4000 píxeles</li>
+                <li><strong>Formato PNG:</strong> Mejor para archivos de origen antes de procesar</li>
+            </ul>
+
+            <h2>🐛 Solución de Problemas</h2>
+
+            <div class="alerta">
+                <strong>❌ Error: "InitializeComponent no existe"</strong><br>
+                ✅ Solución: Usa el método <code>CrearInterfaz()</code> en lugar de <code>InitializeComponent()</code>
+            </div>
+
+            <div class="alerta">
+                <strong>❌ Error: "Program ya contiene una definición para Main"</strong><br>
+                ✅ Solución: Elimina archivos duplicados (Form1.cs, Program.cs extra)
+            </div>
+
+            <div class="alerta">
+                <strong>❌ Error: "No se puede cargar la imagen"</strong><br>
+                ✅ Solución: Verifica que el archivo no esté corrupto y está en formato válido
+            </div>
+
+            <div class="alerta">
+                <strong>❌ La imagen se ve en blanco</strong><br>
+                ✅ Solución: La imagen debe tener contraste para detectar bordes visibles
+            </div>
+
+            <h2>📊 Formatos Soportados</h2>
+            <table class="tabla">
+                <tr>
+                    <th>Formato</th>
+                    <th>Calidad</th>
+                    <th>Tamaño</th>
+                    <th>Uso Recomendado</th>
+                </tr>
+                <tr>
+                    <td>PNG</td>
+                    <td>Excelente</td>
+                    <td>Grande</td>
+                    <td>Mejor calidad, sin pérdida</td>
+                </tr>
+                <tr>
+                    <td>JPG/JPEG</td>
+                    <td>Buena</td>
+                    <td>Pequeño</td>
+                    <td>Web, email, archivos pequeños</td>
+                </tr>
+                <tr>
+                    <td>BMP</td>
+                    <td>Excelente</td>
+                    <td>Muy grande</td>
+                    <td>Compatibilidad máxima</td>
+                </tr>
+                <tr>
+                    <td>GIF</td>
+                    <td>Buena</td>
+                    <td>Pequeño</td>
+                    <td>Imágenes simples, logos</td>
+                </tr>
+            </table>
+
+            <div class="exito">
+                <strong>✅ ¡LISTO!</strong><br>
+                Ahora tienes el proyecto completamente configurado. Solo debes compilar y ejecutar con F5. La aplicación funcionará perfectamente.
+            </div>
+
+            <a href="index.html" class="volver">← Volver al Inicio</a>
+        </div>
+
+        <footer>
+            <p>© 2024 Detector de Bordes - Procesamiento de Imágenes</p>
+            <p>Algoritmo Sobel implementado en C# Windows Forms</p>
+        </footer>
+    </div>
+
+</body>
+</html>
